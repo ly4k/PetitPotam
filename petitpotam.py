@@ -22,7 +22,7 @@ import logging
 import random
 import sys
 
-from impacket import ntlm, system_errors, version
+from impacket import system_errors, version
 from impacket.dcerpc.v5 import transport
 from impacket.dcerpc.v5.dtypes import (
     BOOL,
@@ -489,15 +489,12 @@ class PetitPotam:
             self.nthash,
         )
 
-        # rpctransport.set_kerberos(self.do_kerberos, kdcHost=self.dc_host)
-
-        # rpctransport.set_auth_type(ntlm.NTLM_AUTH_PKT_INTEGRITY)
+        rpctransport.set_kerberos(self.do_kerberos, kdcHost=self.dc_host)
 
         rpctransport.setRemoteHost(self.target_ip)
         rpctransport.set_dport(self.port)
 
         dce = rpctransport.get_dce_rpc()
-        dce.set_auth_type(ntlm.NTLM_AUTH_PKT_INTEGRITY)
 
         logging.debug("Connecting to %s" % (repr(stringbinding)))
 
