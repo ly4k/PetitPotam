@@ -103,6 +103,8 @@ Impacket v0.9.23 - Copyright 2021 SecureAuth Corporation
 PetitPotam was orignally created / discovered by [topotam](https://github.com/topotam).
 This exploit is heavily based on the implementation and research from [topotam](https://github.com/topotam/PetitPotam).
 
+If you're using `ntlmrelayx` and the Windows host connects with an anonymous logon (null) session, please see [this pull request](https://github.com/SecureAuthCorp/impacket/pull/1179) to fix the issue. You can confirm the authentication coercion with Responder.
+
 ### CVE-2021-36942
 
 Microsoft has released a [patch](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-36942) for PetitPotam, but only for two of the methods (EfsRpcOpenFileRaw, EfsRpcEncryptFileSrv). For that reason, those methods are *not* implemented in this exploit. 
