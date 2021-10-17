@@ -112,7 +112,7 @@ Microsoft has released a [patch](https://msrc.microsoft.com/update-guide/vulnera
 Instead, the other methods (which were not fully implemented by topotam) have been implemented in this exploit.
 
 ## Authors
-- [@ollypwn](https://github.com/ollypwn)
+- [@ly4k](https://github.com/ly4k)
 
 ## Credits
 - [@topotam](https://github.com/topotam)'s [implementation](https://github.com/topotam/PetitPotam)
